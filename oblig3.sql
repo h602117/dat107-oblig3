@@ -18,7 +18,7 @@ INSERT INTO employee
   (username, firstname, lastname, hiredDate, position, monthlySalary)
 VALUES
   ('andf', 'Anders', 'Fimreite', NOW(), 'Developer', 100000.00),
-  ('jorf', 'Jørgen', 'Fjølstad', NOW(), 'Developer', 100000.00),
+  ('jorf', 'Jorgen', 'Fjolstad', NOW(), 'Developer', 100000.00),
   ('erig', 'Eric', 'Gjerstad', NOW(), 'Developer', 100000.00);
 
 

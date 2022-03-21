@@ -3,7 +3,6 @@ package no.hvl.dat107.employee;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-import javax.annotation.processing.Generated;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
