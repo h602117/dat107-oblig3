@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<persistence xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+	version="2.0" xmlns="http://java.sun.com/xml/ns/persistence">
+	<persistence-unit name="oblig3PersistenceUnit" transaction-type="RESOURCE_LOCAL">
+
+		<class>no.hvl.dat107.employee.Employee</class>
+		<class>no.hvl.dat107.department.Department</class>
+		<class>no.hvl.dat107.project.Project</class>
+		<class>no.hvl.dat107.projectwork.ProjectWork</class>
+
+		<properties>
+		    <!--  Generelle JPA properties -->
+			<property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
+			<property name="javax.persistence.jdbc.url"
+				value="jdbc:postgresql://ider-database.westeurope.cloudapp.azure.com:5432/h602117"/>
+			<property name="javax.persistence.jdbc.user" value="h602117"/>
+			<property name="javax.persistence.jdbc.password" value="password"/>
+
+			<!--  EclipseLink properties -->
+            <!--  Se https://wiki.eclipse.org/EclipseLink/Examples/JPA/Logging -->
+            <property name="eclipselink.logging.level" value="WARNING"/>
+		</properties>
+
+	</persistence-unit>
+</persistence>
