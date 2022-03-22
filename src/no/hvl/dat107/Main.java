@@ -5,6 +5,8 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
 
+import no.hvl.dat107.department.Department;
+import no.hvl.dat107.department.DepartmentDAO;
 import no.hvl.dat107.employee.*;
 
 public class Main {
@@ -79,11 +81,80 @@ public class Main {
 		} catch (NumberFormatException e) {
 			return;
 		}
+		int departmentId;
+		try {
+			System.out.print("DepartmentId: ");
+			departmentId = Integer.parseInt(sc.nextLine());
+		} catch (NumberFormatException e) {
+			return;
+		}
 
-		Employee emp = new Employee(username, firstname, lastname, hiredDate, position, monthlySalary);
 		EmployeeDAO edao = new EmployeeDAO();
-		edao.addNewEmployee(emp);
+		Employee emp = edao.addNewEmployee(username, firstname, lastname, hiredDate, position, monthlySalary,
+				departmentId);
 		System.out.println("New employee added: " + emp);
+	}
+
+	private static void newDepartment(Scanner sc) {
+		System.out.print("Department name: ");
+		String name = sc.nextLine();
+		int leaderId;
+		try {
+			System.out.print("Leader id: ");
+			leaderId = Integer.parseInt(sc.nextLine());
+		} catch (NumberFormatException e) {
+			return;
+		}
+
+		DepartmentDAO ddao = new DepartmentDAO();
+		Department dep = ddao.addNewDepartment(name, leaderId);
+		System.out.println("New department added: " + dep);
+	}
+
+	private static void allDepartments() {
+		DepartmentDAO ddao = new DepartmentDAO();
+		List<Department> d = ddao.retrieveAllDepartments();
+		prettyPrintList(d);
+	}
+
+	private static void allEmployeesInDepartment(Scanner sc) {
+		int departmentId;
+		try {
+			System.out.print("Department id: ");
+			departmentId = Integer.parseInt(sc.nextLine());
+		} catch (NumberFormatException e) {
+			return;
+		}
+
+		EmployeeDAO edao = new EmployeeDAO();
+		DepartmentDAO ddao = new DepartmentDAO();
+		List<Employee> emps = edao.retrieveAllEmployees(departmentId);
+		Employee leader = ddao.retrieveLeader(departmentId);
+
+		emps.forEach((emp) -> {
+			System.out.println(emp.getId().equals(leader.getId()) ? "LEADER: " + emp : emp);
+		});
+	}
+
+	private static void updateEmployeeDepartment(Scanner sc) {
+		int empId;
+		int depId;
+		try {
+			System.out.print("Employee id: ");
+			empId = Integer.parseInt(sc.nextLine());
+		} catch (NumberFormatException e) {
+			return;
+		}
+		try {
+			System.err.print("Department id: ");
+			depId = Integer.parseInt(sc.nextLine());
+		} catch (NumberFormatException e) {
+			return;
+		}
+
+		EmployeeDAO edao = new EmployeeDAO();
+		Employee emp = edao.updateEmployeeDepartment(edao.retrieveEmployee(empId), (new DepartmentDAO()).retrieveDepartment(depId));
+		System.out.println("Updated department of: " + emp);
 	}
 
 	private static <T> void prettyPrintList(List<T> list) {
@@ -96,6 +167,10 @@ public class Main {
 		System.out.println("3) Print all employees");
 		System.out.println("4) Update employee position");
 		System.out.println("5) Add new employee");
+		System.out.println("6) Add new department");
+		System.out.println("7) Print all departments");
+		System.out.println("8) Print all employees in a department");
+		System.out.println("9) Update employee department");
 
 		int idx;
 		System.out.println("Anything else to quit.");
@@ -121,6 +196,18 @@ public class Main {
 				break;
 			case 5:
 				newEmployee(sc);
+				break;
+			case 6:
+				newDepartment(sc);
+				break;
+			case 7:
+				allDepartments();
+				break;
+			case 8:
+				allEmployeesInDepartment(sc);
+				break;
+			case 9:
+				updateEmployeeDepartment(sc);
 				break;
 			default:
 				return false;

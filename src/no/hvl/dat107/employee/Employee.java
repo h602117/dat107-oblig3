@@ -7,7 +7,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Table;
+
+import no.hvl.dat107.department.Department;
+
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 @Table(schema = "oblig3")
@@ -22,22 +27,26 @@ public class Employee {
 	private LocalDate hiredDate;
 	private String position;
 	private BigDecimal monthlySalary;
+	@ManyToOne
+	@JoinColumn(name = "departmentId", referencedColumnName = "id")
+	private Department department;
 
 	public Employee() {
 	}
 
 	public Employee(String username, String firstname, String lastname, LocalDate hiredDate,
-			String position, BigDecimal monthlySalary) {
+			String position, BigDecimal monthlySalary, Department department) {
 		this.username = username;
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.hiredDate = hiredDate;
 		this.position = position;
 		this.monthlySalary = monthlySalary;
+		this.department = department;
 	}
 
 	public Employee(Integer id, String username, String firstname, String lastname, LocalDate hiredDate,
-			String position, BigDecimal monthlySalary) {
+			String position, BigDecimal monthlySalary, Department department) {
 		this.id = id;
 		this.username = username;
 		this.firstname = firstname;
@@ -45,6 +54,15 @@ public class Employee {
 		this.hiredDate = hiredDate;
 		this.position = position;
 		this.monthlySalary = monthlySalary;
+		this.department = department;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public String getUsername() {
@@ -95,11 +113,19 @@ public class Employee {
 		this.monthlySalary = monthlySalary;
 	}
 
+	public Department getDepartment() {
+		return department;
+	}
+
+	public void setDepartment(Department department) {
+		this.department = department;
+	}
+
 	@Override
 	public String toString() {
 		return "Employee [firstname = " + firstname + ", hiredDate = " + hiredDate + ", id = " + id + ", lastname = "
-				+ lastname
-				+ ", monthlySalary = " + monthlySalary + ", position = " + position + ", username = " + username + "]";
+				+ lastname + ", monthlySalary = " + monthlySalary + ", position = " + position + ", username = "
+				+ username + ", department = " + department.getName() + "]";
 	}
 
 }

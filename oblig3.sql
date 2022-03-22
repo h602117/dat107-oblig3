@@ -5,7 +5,7 @@ SET search_path TO oblig3;
 
 CREATE TABLE employee (
   id SERIAL PRIMARY KEY,
-  username VARCHAR(4) NOT NULL,
+  username VARCHAR(4) UNIQUE NOT NULL,
   firstname VARCHAR(50) NOT NULL,
   lastname VARCHAR(50) NOT NULL,
   hiredDate DATE,
@@ -16,7 +16,7 @@ CREATE TABLE employee (
 
 CREATE TABLE department (
   id SERIAL PRIMARY KEY,
-  name VARCHAR(50) NOT NULL,
+  name VARCHAR(50) UNIQUE NOT NULL,
   leaderId INTEGER,
   CONSTRAINT fkLeader FOREIGN KEY (leaderId) REFERENCES employee(id) ON DELETE RESTRICT
 );
