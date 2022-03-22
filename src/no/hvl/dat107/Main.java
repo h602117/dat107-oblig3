@@ -5,9 +5,11 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
 
-import no.hvl.dat107.department.Department;
-import no.hvl.dat107.department.DepartmentDAO;
+import no.hvl.dat107.department.*;
 import no.hvl.dat107.employee.*;
+import no.hvl.dat107.project.*;
+import no.hvl.dat107.projectwork.ProjectWork;
+import no.hvl.dat107.projectwork.ProjectWorkDAO;
 
 public class Main {
 
@@ -153,8 +155,66 @@ public class Main {
 		}
 
 		EmployeeDAO edao = new EmployeeDAO();
-		Employee emp = edao.updateEmployeeDepartment(edao.retrieveEmployee(empId), (new DepartmentDAO()).retrieveDepartment(depId));
+		Employee emp = edao.updateEmployeeDepartment(edao.retrieveEmployee(empId),
+				(new DepartmentDAO()).retrieveDepartment(depId));
 		System.out.println("Updated department of: " + emp);
+	}
+
+	private static void projectById(Scanner sc) {
+		int id;
+		try {
+			System.out.print("Project id: ");
+			id = Integer.parseInt(sc.nextLine());
+		} catch (NumberFormatException e) {
+			return;
+		}
+
+		Project pro = (new ProjectDAO()).retrieveProject(id);
+		System.out.println(pro);
+	}
+
+	private static void newProject(Scanner sc) {
+		System.out.print("Project name: ");
+		String name = sc.nextLine();
+		System.out.print("Project description: ");
+		String desc = sc.nextLine();
+
+		Project pro = (new ProjectDAO()).addNewProject(name, desc);
+		System.out.println("New project added: " + pro);
+	}
+
+	private static void addEmployeeToProject(Scanner sc) {
+		int employeeId;
+		try {
+			System.out.print("Employee id: ");
+			employeeId = Integer.parseInt(sc.nextLine());
+		} catch (NumberFormatException e) {
+			return;
+		}
+		int projectId;
+		try {
+			System.out.print("Project id: ");
+			projectId = Integer.parseInt(sc.nextLine());
+		} catch (NumberFormatException e) {
+			return;
+		}
+
+		System.out.print("Role: ");
+		String role = sc.nextLine();
+
+		ProjectWork pw = (new ProjectWorkDAO()).addNewProjectWork(
+				(new EmployeeDAO()).retrieveEmployee(employeeId),
+				(new ProjectDAO()).retrieveProject(projectId),
+				role);
+		System.out.println("New department added: " + pw);
+	}
+
+	private static void registerHours(Scanner sc) {
+
+	}
+
+	private static void printProjectInfo(Scanner sc) {
+
 	}
 
 	private static <T> void prettyPrintList(List<T> list) {
@@ -162,15 +222,20 @@ public class Main {
 	}
 
 	private static boolean menu(Scanner sc) {
-		System.out.println("1) Search for employee by id");
-		System.out.println("2) Search for employee by username");
-		System.out.println("3) Print all employees");
-		System.out.println("4) Update employee position");
-		System.out.println("5) Add new employee");
-		System.out.println("6) Add new department");
-		System.out.println("7) Print all departments");
-		System.out.println("8) Print all employees in a department");
-		System.out.println("9) Update employee department");
+		System.out.println("1)  Search for employee by id");
+		System.out.println("2)  Search for employee by username");
+		System.out.println("3)  Print all employees");
+		System.out.println("4)  Update employee position");
+		System.out.println("5)  Add new employee");
+		System.out.println("6)  Add new department");
+		System.out.println("7)  Print all departments");
+		System.out.println("8)  Print all employees in a department");
+		System.out.println("9)  Update employee department");
+		System.out.println("10) Search for project");
+		System.out.println("11) Add new project");
+		System.out.println("12) Register employee to project");
+		System.out.println("13) Register workhours for an employee to a project");
+		System.out.println("14) Print all info about a project");
 
 		int idx;
 		System.out.println("Anything else to quit.");
@@ -208,6 +273,21 @@ public class Main {
 				break;
 			case 9:
 				updateEmployeeDepartment(sc);
+				break;
+			case 10:
+				projectById(sc);
+				break;
+			case 11:
+				newProject(sc);
+				break;
+			case 12:
+				addEmployeeToProject(sc);
+				break;
+			case 13:
+				registerHours(sc);
+				break;
+			case 14:
+				printProjectInfo(sc);
 				break;
 			default:
 				return false;

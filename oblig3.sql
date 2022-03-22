@@ -24,6 +24,26 @@ CREATE TABLE department (
 ALTER TABLE employee
 ADD CONSTRAINT fkDepartment FOREIGN KEY (departmentId) REFERENCES department(id) ON DELETE RESTRICT;
 
+CREATE TABLE project (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(50) NOT NULL,
+  description TEXT NOT NULL
+);
+
+CREATE TABLE projectWork (
+  id SERIAL PRIMARY KEY,
+  employeeId INTEGER,
+  projectId INTEGER,
+  hoursWorked INTEGER,
+  role VARCHAR(50),
+  CONSTRAINT fkEmployee FOREIGN KEY (employeeId) REFERENCES employee(id) ON DELETE RESTRICT,
+  CONSTRAINT fkProjectId FOREIGN KEY (projectId) REFERENCES project(id) ON DELETE RESTRICT
+);
+
+INSERT INTO project (name, description) VALUES
+  ('Website', 'Create a website for the company'),
+  ('App', 'Create an app for the company');
+
 INSERT INTO department (name) VALUES
   ('Software Development'),
   ('Accounting'),
@@ -36,21 +56,12 @@ INSERT INTO employee (username, firstname, lastname, hiredDate, position, monthl
   ('test', 'Test', 'Testesen', NOW(), 'Accountant', 10000.00, 2),
   ('olan', 'Ola', 'Nordmann', NOW(), 'Scammer', 1000000.00, 3);
 
+INSERT INTO projectWork (employeeId, projectId, hoursWorked, role) VALUES
+  (1, 1, 1, 'OFL'),
+  (2, 1, 2, 'VOFL'),
+  (3, 2, 1, 'Dev'),
+  (1, 2, 2, 'OFL');
+
 UPDATE department SET leaderId = 1 WHERE id = 1;
 UPDATE department SET leaderId = 4 WHERE id = 2;
 UPDATE department SET leaderId = 5 WHERE id = 3;
-
--- CREATE TABLE project (
---   id SERIAL PRIMARY KEY,
---   name VARCHAR(50) NOT NULL,
---   description TEXT NOT NULL
--- );
-
--- CREATE TABLE projectWork (
---   id SERIAL PRIMARY KEY,
---   employeeId INTEGER,
---   projectId INTEGER,
---   hoursWorked INTEGER,
---   CONSTRAINT fkEmployee FOREIGN KEY (employeeId) REFERENCES employee(id) ON DELETE RESTRICT,
---   CONSTRAINT fkProjectId FOREIGN KEY (projectId) REFERENCES project(id) ON DELETE RESTRICT
--- );

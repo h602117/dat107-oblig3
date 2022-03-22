@@ -16,7 +16,7 @@ public class Department {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Integer id;
 	private String name;
 	@OneToOne
 	@JoinColumn(name = "leaderId", referencedColumnName = "id")
@@ -36,11 +36,11 @@ public class Department {
 		this.leader = leader;
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
