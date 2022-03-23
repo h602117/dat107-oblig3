@@ -5,11 +5,12 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
 
-import no.hvl.dat107.department.*;
-import no.hvl.dat107.employee.*;
-import no.hvl.dat107.project.*;
-import no.hvl.dat107.projectwork.ProjectWork;
-import no.hvl.dat107.projectwork.ProjectWorkDAO;
+import no.hvl.dat107.department.Department;
+import no.hvl.dat107.department.DepartmentDAO;
+import no.hvl.dat107.employee.Employee;
+import no.hvl.dat107.employee.EmployeeDAO;
+import no.hvl.dat107.project.Project;
+import no.hvl.dat107.project.ProjectDAO;
 
 public class Main {
 
@@ -184,29 +185,7 @@ public class Main {
 	}
 
 	private static void addEmployeeToProject(Scanner sc) {
-		int employeeId;
-		try {
-			System.out.print("Employee id: ");
-			employeeId = Integer.parseInt(sc.nextLine());
-		} catch (NumberFormatException e) {
-			return;
-		}
-		int projectId;
-		try {
-			System.out.print("Project id: ");
-			projectId = Integer.parseInt(sc.nextLine());
-		} catch (NumberFormatException e) {
-			return;
-		}
 
-		System.out.print("Role: ");
-		String role = sc.nextLine();
-
-		ProjectWork pw = (new ProjectWorkDAO()).addNewProjectWork(
-				(new EmployeeDAO()).retrieveEmployee(employeeId),
-				(new ProjectDAO()).retrieveProject(projectId),
-				role);
-		System.out.println("New department added: " + pw);
 	}
 
 	private static void registerHours(Scanner sc) {
@@ -247,50 +226,50 @@ public class Main {
 		}
 
 		switch (idx) {
-			case 1:
-				employeeById(sc);
-				break;
-			case 2:
-				employeeByUsername(sc);
-				break;
-			case 3:
-				allEmployees();
-				break;
-			case 4:
-				updateEmployeePosition(sc);
-				break;
-			case 5:
-				newEmployee(sc);
-				break;
-			case 6:
-				newDepartment(sc);
-				break;
-			case 7:
-				allDepartments();
-				break;
-			case 8:
-				allEmployeesInDepartment(sc);
-				break;
-			case 9:
-				updateEmployeeDepartment(sc);
-				break;
-			case 10:
-				projectById(sc);
-				break;
-			case 11:
-				newProject(sc);
-				break;
-			case 12:
-				addEmployeeToProject(sc);
-				break;
-			case 13:
-				registerHours(sc);
-				break;
-			case 14:
-				printProjectInfo(sc);
-				break;
-			default:
-				return false;
+		case 1:
+			employeeById(sc);
+			break;
+		case 2:
+			employeeByUsername(sc);
+			break;
+		case 3:
+			allEmployees();
+			break;
+		case 4:
+			updateEmployeePosition(sc);
+			break;
+		case 5:
+			newEmployee(sc);
+			break;
+		case 6:
+			newDepartment(sc);
+			break;
+		case 7:
+			allDepartments();
+			break;
+		case 8:
+			allEmployeesInDepartment(sc);
+			break;
+		case 9:
+			updateEmployeeDepartment(sc);
+			break;
+		case 10:
+			projectById(sc);
+			break;
+		case 11:
+			newProject(sc);
+			break;
+		case 12:
+			addEmployeeToProject(sc);
+			break;
+		case 13:
+			registerHours(sc);
+			break;
+		case 14:
+			printProjectInfo(sc);
+			break;
+		default:
+			return false;
 		}
 
 		return true;

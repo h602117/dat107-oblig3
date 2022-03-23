@@ -39,8 +39,7 @@ public class EmployeeDAO {
 
 		try {
 			e = (Employee) em.createQuery("SELECT e FROM Employee e WHERE e.username = :username")
-					.setParameter("username", username)
-					.getSingleResult();
+					.setParameter("username", username).getSingleResult();
 		} finally {
 			em.close();
 		}
@@ -66,8 +65,7 @@ public class EmployeeDAO {
 		Department dep = (new DepartmentDAO()).retrieveDepartment(departmentId);
 		try {
 			emps = em.createQuery("SELECT e FROM Employee e WHERE e.department = :department")
-				.setParameter("department", dep)
-				.getResultList();
+					.setParameter("department", dep).getResultList();
 		} finally {
 			em.close();
 		}

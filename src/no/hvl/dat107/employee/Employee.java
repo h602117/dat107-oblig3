@@ -2,17 +2,19 @@ package no.hvl.dat107.employee;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import no.hvl.dat107.department.Department;
-
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import no.hvl.dat107.project.Project;
 
 @Entity
 @Table(schema = "oblig3")
@@ -30,12 +32,14 @@ public class Employee {
 	@ManyToOne
 	@JoinColumn(name = "departmentId", referencedColumnName = "id")
 	private Department department;
+	@ManyToMany(mappedBy = "employees")
+	private List<Project> projects;
 
 	public Employee() {
 	}
 
-	public Employee(String username, String firstname, String lastname, LocalDate hiredDate,
-			String position, BigDecimal monthlySalary, Department department) {
+	public Employee(String username, String firstname, String lastname, LocalDate hiredDate, String position,
+			BigDecimal monthlySalary, Department department) {
 		this.username = username;
 		this.firstname = firstname;
 		this.lastname = lastname;
