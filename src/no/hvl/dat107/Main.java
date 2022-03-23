@@ -3,7 +3,6 @@ package no.hvl.dat107;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Scanner;
 
 import no.hvl.dat107.department.Department;
 import no.hvl.dat107.department.DepartmentDAO;
@@ -15,7 +14,7 @@ import no.hvl.dat107.project.ProjectDAO;
 public class Main {
 
 	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
+		Scan sc = new Scan();
 		boolean running = true;
 		while (running) {
 			running = menu(sc);
@@ -24,22 +23,15 @@ public class Main {
 		sc.close();
 	}
 
-	private static void employeeById(Scanner sc) {
-		int id;
-		try {
-			System.out.print("Search for employee by id: ");
-			id = Integer.parseInt(sc.nextLine());
-		} catch (NumberFormatException e) {
-			return;
-		}
+	private static void employeeById(Scan sc) {
+		int id = sc.integer("Employee id: ");
 		EmployeeDAO edao = new EmployeeDAO();
 		Employee e = edao.retrieveEmployee(id);
 		System.out.println(e);
 	}
 
-	private static void employeeByUsername(Scanner sc) {
-		System.out.print("Search for employee by username: ");
-		String username = sc.nextLine();
+	private static void employeeByUsername(Scan sc) {
+		String username = sc.string("Employee username: ");
 		EmployeeDAO edao = new EmployeeDAO();
 		Employee e = edao.retrieveEmployee(username);
 		System.out.println(e);
@@ -51,46 +43,23 @@ public class Main {
 		prettyPrintList(e);
 	}
 
-	private static void updateEmployeePosition(Scanner sc) {
+	private static void updateEmployeePosition(Scan sc) {
 		EmployeeDAO edao = new EmployeeDAO();
-		System.out.print("Enter employee id: ");
-		int id;
-		try {
-			id = Integer.parseInt(sc.nextLine());
-		} catch (NumberFormatException e) {
-			return;
-		}
+		int id = sc.integer("Employee id: ");
 		Employee e = edao.retrieveEmployee(id);
-		System.out.print("New position: ");
-		String position = sc.nextLine();
+		String position = sc.string("New position: ");
 		e = edao.updateEmployeePosition(e, position);
 		System.out.println(e);
 	}
 
-	private static void newEmployee(Scanner sc) {
-		System.out.print("Username: ");
-		String username = sc.nextLine();
-		System.out.print("Firstname: ");
-		String firstname = sc.nextLine();
-		System.out.print("Lastname: ");
-		String lastname = sc.nextLine();
+	private static void newEmployee(Scan sc) {
+		String username = sc.string("Username: ");
+		String firstname = sc.string("Firstname: ");
+		String lastname = sc.string("Lastname: ");
 		LocalDate hiredDate = LocalDate.now();
-		System.out.print("Position: ");
-		String position = sc.nextLine();
-		BigDecimal monthlySalary;
-		try {
-			System.out.print("Salary: ");
-			monthlySalary = new BigDecimal(Double.parseDouble(sc.nextLine()));
-		} catch (NumberFormatException e) {
-			return;
-		}
-		int departmentId;
-		try {
-			System.out.print("DepartmentId: ");
-			departmentId = Integer.parseInt(sc.nextLine());
-		} catch (NumberFormatException e) {
-			return;
-		}
+		String position = sc.string("Position: ");
+		BigDecimal monthlySalary = sc.bigdecimal("Monthly salary: ");
+		int departmentId = sc.integer("Department id: ");
 
 		EmployeeDAO edao = new EmployeeDAO();
 		Employee emp = edao.addNewEmployee(username, firstname, lastname, hiredDate, position, monthlySalary,
@@ -98,16 +67,9 @@ public class Main {
 		System.out.println("New employee added: " + emp);
 	}
 
-	private static void newDepartment(Scanner sc) {
-		System.out.print("Department name: ");
-		String name = sc.nextLine();
-		int leaderId;
-		try {
-			System.out.print("Leader id: ");
-			leaderId = Integer.parseInt(sc.nextLine());
-		} catch (NumberFormatException e) {
-			return;
-		}
+	private static void newDepartment(Scan sc) {
+		String name = sc.string("Department name: ");
+		int leaderId = sc.integer("Leader id: ");
 
 		DepartmentDAO ddao = new DepartmentDAO();
 		Department dep = ddao.addNewDepartment(name, leaderId);
@@ -120,14 +82,8 @@ public class Main {
 		prettyPrintList(d);
 	}
 
-	private static void allEmployeesInDepartment(Scanner sc) {
-		int departmentId;
-		try {
-			System.out.print("Department id: ");
-			departmentId = Integer.parseInt(sc.nextLine());
-		} catch (NumberFormatException e) {
-			return;
-		}
+	private static void allEmployeesInDepartment(Scan sc) {
+		int departmentId = sc.integer("Department id: ");
 
 		EmployeeDAO edao = new EmployeeDAO();
 		DepartmentDAO ddao = new DepartmentDAO();
@@ -139,21 +95,9 @@ public class Main {
 		});
 	}
 
-	private static void updateEmployeeDepartment(Scanner sc) {
-		int empId;
-		int depId;
-		try {
-			System.out.print("Employee id: ");
-			empId = Integer.parseInt(sc.nextLine());
-		} catch (NumberFormatException e) {
-			return;
-		}
-		try {
-			System.err.print("Department id: ");
-			depId = Integer.parseInt(sc.nextLine());
-		} catch (NumberFormatException e) {
-			return;
-		}
+	private static void updateEmployeeDepartment(Scan sc) {
+		int empId = sc.integer("Employee id: ");
+		int depId = sc.integer("Department id: ");
 
 		EmployeeDAO edao = new EmployeeDAO();
 		Employee emp = edao.updateEmployeeDepartment(edao.retrieveEmployee(empId),
@@ -161,38 +105,30 @@ public class Main {
 		System.out.println("Updated department of: " + emp);
 	}
 
-	private static void projectById(Scanner sc) {
-		int id;
-		try {
-			System.out.print("Project id: ");
-			id = Integer.parseInt(sc.nextLine());
-		} catch (NumberFormatException e) {
-			return;
-		}
+	private static void projectById(Scan sc) {
+		int id = sc.integer("Project id: ");
 
 		Project pro = (new ProjectDAO()).retrieveProject(id);
 		System.out.println(pro);
 	}
 
-	private static void newProject(Scanner sc) {
-		System.out.print("Project name: ");
-		String name = sc.nextLine();
-		System.out.print("Project description: ");
-		String desc = sc.nextLine();
+	private static void newProject(Scan sc) {
+		String name = sc.string("Project name: ");
+		String desc = sc.string("Project description: ");
 
 		Project pro = (new ProjectDAO()).addNewProject(name, desc);
 		System.out.println("New project added: " + pro);
 	}
 
-	private static void addEmployeeToProject(Scanner sc) {
+	private static void addEmployeeToProject(Scan sc) {
 
 	}
 
-	private static void registerHours(Scanner sc) {
+	private static void registerHours(Scan sc) {
 
 	}
 
-	private static void printProjectInfo(Scanner sc) {
+	private static void printProjectInfo(Scan sc) {
 
 	}
 
@@ -200,7 +136,7 @@ public class Main {
 		list.forEach((n) -> System.out.println(n));
 	}
 
-	private static boolean menu(Scanner sc) {
+	private static boolean menu(Scan sc) {
 		System.out.println("1)  Search for employee by id");
 		System.out.println("2)  Search for employee by username");
 		System.out.println("3)  Print all employees");
@@ -215,15 +151,9 @@ public class Main {
 		System.out.println("12) Register employee to project");
 		System.out.println("13) Register workhours for an employee to a project");
 		System.out.println("14) Print all info about a project");
+		System.out.println("0)  Quit");
 
-		int idx;
-		System.out.println("Anything else to quit.");
-		System.out.print("Enter a number: ");
-		try {
-			idx = Integer.parseInt(sc.nextLine());
-		} catch (NumberFormatException e) {
-			return false;
-		}
+		int idx = sc.integer("Enter a number: ");
 
 		switch (idx) {
 		case 1:
