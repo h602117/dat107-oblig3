@@ -6,8 +6,8 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/Anders/git/dat107-oblig3/lib/eclipselink-2.7.10.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Anders/git/dat107-oblig3/lib/javax.persistence-api-2.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Anders/git/dat107-oblig3/lib/postgresql-42.3.3.jar"/>
+	<classpathentry kind="lib" path="lib/eclipselink-2.7.10.jar"/>
+	<classpathentry kind="lib" path="lib/javax.persistence-api-2.2.jar"/>
+	<classpathentry kind="lib" path="lib/postgresql-42.3.3.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
