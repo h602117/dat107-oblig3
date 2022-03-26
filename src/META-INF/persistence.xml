@@ -7,7 +7,7 @@
 		<class>no.hvl.dat107.employee.Employee</class>
 		<class>no.hvl.dat107.department.Department</class>
 		<class>no.hvl.dat107.project.Project</class>
-		<class>no.hvl.dat107.projectwork.ProjectWork</class>
+		<class>no.hvl.dat107.projectparticipation.ProjectParticipation</class>
 
 		<properties>
 		    <!--  Generelle JPA properties -->

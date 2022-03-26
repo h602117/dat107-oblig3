@@ -38,7 +38,7 @@ public class EmployeeDAO {
 		Employee e = null;
 
 		try {
-			e = (Employee) em.createQuery("SELECT e FROM Employee e WHERE e.username = :username")
+			e = em.createQuery("SELECT e FROM Employee e WHERE e.username = :username", Employee.class)
 					.setParameter("username", username).getSingleResult();
 		} finally {
 			em.close();
@@ -51,7 +51,7 @@ public class EmployeeDAO {
 		EntityManager em = emf.createEntityManager();
 		List<Employee> emps;
 		try {
-			emps = em.createQuery("SELECT e FROM Employee e").getResultList();
+			emps = em.createQuery("SELECT e FROM Employee e", Employee.class).getResultList();
 		} finally {
 			em.close();
 		}
@@ -64,7 +64,7 @@ public class EmployeeDAO {
 		List<Employee> emps;
 		Department dep = (new DepartmentDAO()).retrieveDepartment(departmentId);
 		try {
-			emps = em.createQuery("SELECT e FROM Employee e WHERE e.department = :department")
+			emps = em.createQuery("SELECT e FROM Employee e WHERE e.department = :department", Employee.class)
 					.setParameter("department", dep).getResultList();
 		} finally {
 			em.close();

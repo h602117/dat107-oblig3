@@ -30,7 +30,7 @@ CREATE TABLE project (
   description TEXT NOT NULL
 );
 
-CREATE TABLE projectWork (
+CREATE TABLE projectParticipation (
   id SERIAL PRIMARY KEY,
   employeeId INTEGER,
   projectId INTEGER,
@@ -56,11 +56,11 @@ INSERT INTO employee (username, firstname, lastname, hiredDate, position, monthl
   ('test', 'Test', 'Testesen', NOW(), 'Accountant', 10000.00, 2),
   ('olan', 'Ola', 'Nordmann', NOW(), 'Scammer', 1000000.00, 3);
 
-INSERT INTO projectWork (employeeId, projectId, hoursWorked, role) VALUES
-  (1, 1, 1, 'OFL'),
-  (2, 1, 2, 'VOFL'),
-  (3, 2, 1, 'Dev'),
-  (1, 2, 2, 'OFL');
+INSERT INTO projectParticipation (employeeId, projectId, hoursWorked, role) VALUES
+  (1, 1, 1, 'Leader'),
+  (2, 1, 2, 'Developer'),
+  (3, 2, 1, 'Leader'),
+  (1, 2, 2, 'Developer');
 
 UPDATE department SET leaderId = 1 WHERE id = 1;
 UPDATE department SET leaderId = 4 WHERE id = 2;

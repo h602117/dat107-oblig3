@@ -10,6 +10,8 @@ import no.hvl.dat107.employee.Employee;
 import no.hvl.dat107.employee.EmployeeDAO;
 import no.hvl.dat107.project.Project;
 import no.hvl.dat107.project.ProjectDAO;
+import no.hvl.dat107.projectparticipation.ProjectParticipation;
+import no.hvl.dat107.projectparticipation.ProjectParticipationDAO;
 
 public class Main {
 
@@ -121,15 +123,24 @@ public class Main {
 	}
 
 	private static void addEmployeeToProject(Scan sc) {
-
+		int empId = sc.integer("Employee id: ");
+		int proId = sc.integer("Project id: ");
+		String role = sc.string("Role: ");
+		Employee emp = (new EmployeeDAO()).retrieveEmployee(empId);
+		Project pro = (new ProjectDAO()).retrieveProject(proId);
+		(new ProjectParticipationDAO()).create(emp, pro, role);
 	}
 
 	private static void registerHours(Scan sc) {
-
+		int ppId = sc.integer("Project participation id: ");
+		int hours = sc.integer("Hours: ");
+		(new ProjectParticipationDAO()).updateHoursWorked(ppId, hours);
 	}
 
 	private static void printProjectInfo(Scan sc) {
-
+		int id = sc.integer("Project id: ");
+		List<ProjectParticipation> pps = (new ProjectParticipationDAO()).retrieveByProjectId(id);
+		prettyPrintList(pps);
 	}
 
 	private static <T> void prettyPrintList(List<T> list) {

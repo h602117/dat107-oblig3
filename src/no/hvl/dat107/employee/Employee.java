@@ -9,12 +9,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import no.hvl.dat107.department.Department;
-import no.hvl.dat107.project.Project;
+import no.hvl.dat107.projectparticipation.ProjectParticipation;
 
 @Entity
 @Table(schema = "oblig3")
@@ -32,8 +32,8 @@ public class Employee {
 	@ManyToOne
 	@JoinColumn(name = "departmentId", referencedColumnName = "id")
 	private Department department;
-	@ManyToMany(mappedBy = "employees")
-	private List<Project> projects;
+	@OneToMany(mappedBy = "employee")
+	private List<ProjectParticipation> projectParticipations;
 
 	public Employee() {
 	}
@@ -59,6 +59,10 @@ public class Employee {
 		this.position = position;
 		this.monthlySalary = monthlySalary;
 		this.department = department;
+	}
+
+	public void addProjectParticipation(ProjectParticipation pw) {
+		this.projectParticipations.add(pw);
 	}
 
 	public Integer getId() {

@@ -7,7 +7,7 @@ import javax.persistence.Persistence;
 
 public class ProjectDAO {
 
-    private EntityManagerFactory emf;
+	private EntityManagerFactory emf;
 
 	public ProjectDAO() {
 		emf = Persistence.createEntityManagerFactory("oblig3PersistenceUnit");
@@ -26,7 +26,7 @@ public class ProjectDAO {
 		return pro;
 	}
 
-    public Project addNewProject(String name, String desc) {
+	public Project addNewProject(String name, String desc) {
 		EntityManager em = emf.createEntityManager();
 		EntityTransaction tx = em.getTransaction();
 		Project pro = new Project(name, desc);
@@ -45,5 +45,5 @@ public class ProjectDAO {
 		}
 
 		return pro;
-    }
+	}
 }

@@ -6,12 +6,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import no.hvl.dat107.employee.Employee;
+import no.hvl.dat107.projectparticipation.ProjectParticipation;
 
 @Entity
 @Table(schema = "oblig3")
@@ -22,9 +20,8 @@ public class Project {
 	private Integer id;
 	private String name;
 	private String description;
-	@ManyToMany
-	@JoinTable(name = "ProjectWork", joinColumns = @JoinColumn(name = "projectId"), inverseJoinColumns = @JoinColumn(name = "employeeId"))
-	private List<Employee> employees;
+	@OneToMany(mappedBy = "project")
+	private List<ProjectParticipation> projectParticipations;
 
 	public Project() {
 	}
@@ -38,6 +35,10 @@ public class Project {
 		this.id = id;
 		this.name = name;
 		this.description = description;
+	}
+
+	public void addProjectParticipation(ProjectParticipation pw) {
+		projectParticipations.add(pw);
 	}
 
 	public Integer getId() {

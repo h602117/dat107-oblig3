@@ -35,7 +35,7 @@ public class DepartmentDAO {
 		EntityManager em = emf.createEntityManager();
 		List<Department> deps;
 		try {
-			deps = em.createQuery("SELECT d FROM Department d").getResultList();
+			deps = em.createQuery("SELECT d FROM Department d", Department.class).getResultList();
 		} finally {
 			em.close();
 		}
